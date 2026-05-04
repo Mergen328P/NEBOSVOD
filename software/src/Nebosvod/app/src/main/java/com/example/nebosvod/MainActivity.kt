@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
             serialPort?.open(connection)
 
             // Note: Set to 115200 here. Make sure Arduino's Serial.begin() matches!
-            serialPort?.setParameters(9600, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE)
+            serialPort?.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE)
 
             // Essential for Nano/Pro Micro to start sending data back
             serialPort?.dtr = true
