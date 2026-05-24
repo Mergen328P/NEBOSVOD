@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.Nebosvod" parent="Base.Theme.Nebosvod" />
+    <style name="RoundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20%</item>
+    </style>
 </resources>
