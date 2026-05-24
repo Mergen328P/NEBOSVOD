@@ -7,65 +7,384 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="225dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="45dp"
-        android:gravity="center"
-        android:text="Nebosvod!"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/heightInput"
-        style="@style/Widget.AppCompat.AutoCompleteTextView"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/deviceCard"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:ems="10"
-        android:hint="Высота"
-        android:inputType="text"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        tools:ignore="TextFields" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/sendButton"
-        android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/deviceLogo"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:src="@drawable/ic_launcher_foreground"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="NEBOSVOD"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/logsButton"
+                app:layout_constraintStart_toEndOf="@+id/deviceLogo"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/output"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Статус: ожидание"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/logsButton"
+                app:layout_constraintStart_toEndOf="@+id/deviceLogo"
+                app:layout_constraintTop_toBottomOf="@+id/title"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <ImageButton
+                android:id="@+id/logsButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_recent_history"
+                app:tint="?attr/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/comOutputCard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/commandGrid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deviceCard">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@android:drawable/ic_menu_sort_by_size"
+                    android:alpha="0.7"
+                    app:tint="?attr/colorPrimary"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Терминал"
+                    android:textAllCaps="true"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.05" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <ScrollView
+                android:id="@+id/comScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fillViewport="true"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/comOutput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="--- Терминал инициализирован ---\n"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="13sp" />
+            </ScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="4dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=">"
+                    android:textColor="?attr/colorPrimary"
+                    android:fontFamily="monospace"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/heightInput"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="monospace"
+                    android:hint="Ручная команда..."
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="14sp"
+                    tools:ignore="TextFields" />
+
+                <ImageButton
+                    android:id="@+id/sendButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_menu_send"
+                    app:tint="?attr/colorPrimary"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <GridLayout
+        android:id="@+id/commandGrid"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:gravity="center"
-        android:text="Подтвердить"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heightInput" />
-
-    <TextView
-        android:id="@+id/output"
-        android:layout_width="278dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="32dp"
-        android:gravity="bottom|left"
-        android:text="Статус: ок"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="16dp"
+        android:columnCount="2"
+        android:rowCount="5"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageButton
-        android:id="@+id/logs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="28dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="?attr/actionModePasteDrawable" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:id="@+id/btnAlt"
+            android:layout_width="0dp"
+            android:layout_height="88dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="?android:attr/colorBackgroundFloating"
+            app:icon="@android:drawable/ic_menu_compass"
+            app:iconGravity="textTop"
+            app:iconTint="?attr/colorPrimary"
+            android:textColor="?attr/colorPrimary"
+            android:text="Текущая\nвысота"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:id="@+id/btnGet"
+            android:layout_width="0dp"
+            android:layout_height="88dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="?android:attr/colorBackgroundFloating"
+            app:icon="@android:drawable/ic_menu_view"
+            app:iconGravity="textTop"
+            app:iconTint="?attr/colorPrimary"
+            android:textColor="?attr/colorPrimary"
+            android:text="Высоты\nв памяти"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:id="@+id/btnBuzzOn"
+            android:layout_width="0dp"
+            android:layout_height="88dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="?android:attr/colorBackgroundFloating"
+            app:icon="@android:drawable/ic_media_play"
+            app:iconGravity="textTop"
+            app:iconTint="?attr/colorPrimary"
+            android:textColor="?attr/colorPrimary"
+            android:text="Включить\nзуммер"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:id="@+id/btnBuzzOff"
+            android:layout_width="0dp"
+            android:layout_height="88dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="?android:attr/colorBackgroundFloating"
+            app:icon="@android:drawable/ic_media_pause"
+            app:iconGravity="textTop"
+            app:iconTint="?attr/colorPrimary"
+            android:textColor="?attr/colorPrimary"
+            android:text="Выключить\nзвук"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:layout_gravity="fill_horizontal"
+            android:layout_margin="4dp"
+            app:cardBackgroundColor="?android:attr/colorBackgroundFloating"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_menu_edit"
+                    app:tint="?attr/colorPrimary"
+                    tools:ignore="ContentDescription" />
+
+                <EditText
+                    android:id="@+id/customAltInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:background="@android:color/transparent"
+                    android:hint="Укажите высоту (м)..."
+                    android:inputType="numberSigned"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:id="@+id/btnSet0"
+            android:layout_width="0dp"
+            android:layout_height="88dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="?android:attr/colorBackgroundFloating"
+            app:icon="@android:drawable/ic_menu_save"
+            app:iconGravity="textTop"
+            app:iconTint="?attr/colorPrimary"
+            android:textColor="?attr/colorPrimary"
+            android:text="Записать\nв Слот 1"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:id="@+id/btnSet1"
+            android:layout_width="0dp"
+            android:layout_height="88dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="?android:attr/colorBackgroundFloating"
+            app:icon="@android:drawable/ic_menu_save"
+            app:iconGravity="textTop"
+            app:iconTint="?attr/colorPrimary"
+            android:textColor="?attr/colorPrimary"
+            android:text="Записать\nв Слот 2"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:id="@+id/btnSet2"
+            android:layout_width="0dp"
+            android:layout_height="88dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="?android:attr/colorBackgroundFloating"
+            app:icon="@android:drawable/ic_menu_save"
+            app:iconGravity="textTop"
+            app:iconTint="?attr/colorPrimary"
+            android:textColor="?attr/colorPrimary"
+            android:text="Записать\nв Слот 3"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:id="@+id/btnSet3"
+            android:layout_width="0dp"
+            android:layout_height="88dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            app:cornerRadius="16dp"
+            app:backgroundTint="?android:attr/colorBackgroundFloating"
+            app:icon="@android:drawable/ic_menu_save"
+            app:iconGravity="textTop"
+            app:iconTint="?attr/colorPrimary"
+            android:textColor="?attr/colorPrimary"
+            android:text="Записать\nв Слот 4"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+    </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
